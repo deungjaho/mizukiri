@@ -1,0 +1,54 @@
+水切り (Mizukiri)
+
+井字棋变体。每方棋盘上最多保留三子，落第四子时按 FIFO 淘汰最早的一颗。
+
+
+运行
+
+  服务端    emacs --batch --load server.el
+  客户端    python3 -m http.server 8000
+
+  服务端依赖 Emacs >= 27.1，首次运行自动从 MELPA 安装 websocket 包。
+  QR 码生成是可选的——从 MELPA 安装 qrencode 即可，未安装时服务端静默降级。
+
+  环境变量 MIZUKIRI_BASE_URL 配置 QR 码中使用的公网地址，
+  默认连接 ws://localhost:8765。
+
+
+模式
+
+  双映    同屏双人对战
+  独石    人机对战（minimax + alpha-beta 剪枝，深度 6）
+  远波    远程联机，房间码匹配
+
+
+测试
+
+  emacs --batch --load test/test_server.el -f ert-run-tests-batch-and-exit
+  node --test test/engine.test.js          # 需要 Node >= 18
+
+
+文件
+
+  index.html      前端——HTML、CSS、JS 合在单文件中。无框架，无构建步骤。
+                  游戏引擎是纯逻辑模块，不依赖 DOM，不碰网络。
+
+  server.el       后端——Emacs Lisp WebSocket 服务。游戏逻辑全部是纯函数，
+                  I/O 限定在底部的消息处理函数中。协议契约写在文件头 docstring 里。
+
+  jsQR.min.js     第三方 QR 扫描库，前端按需加载。
+
+  test/           后端用 ERT，前端引擎和 AI 用 Node 原生 test runner。
+                  两端按相同顺序测试同一套游戏逻辑——如果结果不一致，
+                  意味着协议契约被破坏了。
+
+
+协议
+
+  客户端与服务端之间走 WebSocket + JSON。消息类型：
+  客户端 → 服务端：create, join, move, swap, reset, leave, ping
+  服务端 → 客户端：created, start, state, rejected, opponent_left,
+                  room_closed, error, pong
+
+  GameState 结构及不变量定义见 server.el 头部。两端输出字段必须一致。
+  改一端，改另一端。

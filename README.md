@@ -1,2 +1,0 @@
-# mizukiri
-A simple Tic-Tac-Toe game.
