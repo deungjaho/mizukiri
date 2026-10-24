@@ -9,8 +9,8 @@
 
 'use strict';
 
-const { test, describe } = require('node:test');
-const assert = require('node:assert/strict');
+import { test, describe } from 'node:test';
+import assert from 'node:assert/strict';
 
 const WIN_LINES = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8],

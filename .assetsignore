@@ -1,0 +1,12 @@
+node_modules/
+.git/
+.wrangler/
+src/
+test/
+*.el
+package*.json
+wrangler.jsonc
+README
+LICENSE
+.gitignore
+.assetsignore

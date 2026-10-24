@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mizukiri",
+  "main": "src/server.js",
+  "compatibility_date": "2024-10-01",
+  "routes": [
+    {
+      "pattern": "mizukiri.camt.moe",
+      "custom_domain": true
+    }
+  ],
+  "assets": {
+    "directory": "."
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "GAME_SERVER",
+        "class_name": "GameServer"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["GameServer"]
+    }
+  ]
+}

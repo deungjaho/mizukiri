@@ -1,0 +1,17 @@
+{
+  "name": "mizukiri",
+  "version": "1.0.0",
+  "description": "水切り (Mizukiri) - 井字棋变体",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test test/engine.test.js"
+  },
+  "dependencies": {
+    "qrcode-generator": "^2.0.4"
+  },
+  "devDependencies": {
+    "wrangler": "^4.152.0"
+  }
+}
